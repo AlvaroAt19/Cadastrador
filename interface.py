@@ -101,8 +101,8 @@ def cadastro():
     save = Button(CFrame, text = 'Salvar', width = 30, command=salvar)#Botão para ativar a função salvar
     save.place(x=100, y=330)
 
-    Retornar = Button(CFrame, text = 'Retornar', width = 30, command=lambda:back(CFrame)) #Botão para retornar ao frame anterior
-    Retornar.place(x=100, y=370)
+    Retornar_btn = Button(CFrame, text = 'Retornar', width = 30, command=lambda:retornar(CFrame)) #Botão para retornar ao frame anterior
+    Retornar_btn.place(x=100, y=370)
 
 
 Cadastro_btn = ttk.Button(RFrame, text = 'Cadastrar Informação', width = 40, command=cadastro)#Botão para ativar a função cadastro
@@ -127,52 +127,52 @@ def editar():
         cadastrador.cursor.execute('''
             SELECT * FROM Pessoas WHERE ID = ? ;
             ''',(ID_entry.get(),))
-        Pessoa = cadastrador.cursor.fetchone()
+        pessoa = cadastrador.cursor.fetchone()
 
-        if Pessoa:
+        if pessoa:
 
             EdFrame = Frame(EFrame, width=600, height=600, bg='#856ff8')
             EdFrame.pack()
 
             #Nome
-            Nome = Pessoa[1]
+            nome = pessoa[1]
             Nome_lbl = ttk.Label(EdFrame, text='Nome:', width=40, background='#856ff8', foreground='white')
             Nome_lbl.place(x=0,y=50)
             Nome_entry = ttk.Entry(EdFrame, width=40)
             Nome_entry.place(x=70, y=50)
-            Nome_entry.insert(0,Nome)
+            Nome_entry.insert(0,nome)
 
             #Endereço
-            Adress = Pessoa[2]
+            adress = Pessoa[2]
             Adress_lbl = ttk.Label(EdFrame, text='Endereço:', width=40, background='#856ff8', foreground='white')
             Adress_lbl.place(x=0,y=100)
             Adress_entry = ttk.Entry(EdFrame, width=40)
             Adress_entry.place(x=70, y=100)
-            Adress_entry.insert(0,Adress)
+            Adress_entry.insert(0,adress)
 
             #Celular
-            Cel = Pessoa[3]
+            cel = Pessoa[3]
             Cel_lbl = ttk.Label(EdFrame, text='Telefone:', width=40, background='#856ff8', foreground='white')
             Cel_lbl.place(x=0,y=150)
             Cel_entry = ttk.Entry(EdFrame, width=40)
             Cel_entry.place(x=70, y=150)
-            Cel_entry.insert(0,Cel)
+            Cel_entry.insert(0,cel)
 
             #Data de aniversário
-            Birth = Pessoa[4]
+            birth = Pessoa[4]
             Birth_lbl = ttk.Label(EdFrame, text='Nascimento:', width=20, background='#856ff8', foreground='white')
             Birth_lbl.place(x=0,y=200)
             Birth_entry = ttk.Entry(EdFrame, width=40)
             Birth_entry.place(x=75, y=200)
-            Birth_entry.insert(0,Birth)
+            Birth_entry.insert(0,birth)
 
             #Graduação
-            Grad = Pessoa[5]
+            grad = Pessoa[5]
             Grad_lbl = ttk.Label(EdFrame, text='Graduação:', width=40, background='#856ff8', foreground='white')
             Grad_lbl.place(x=0,y=250)
             Grad_entry = ttk.Entry(EdFrame, width=40)
             Grad_entry.place(x=70, y=250)
-            Grad_entry.insert(0,Grad)
+            Grad_entry.insert(0,grad)
 
 
             def save_change():
@@ -219,8 +219,8 @@ def editar():
     Edit_btn = Button(EFrame, text='Editar', width=20, command=edit) #Inicia a função edit
     Edit_btn.place(x=20, y=100)
 
-    Retornar = Button(EFrame, text = 'Retornar', width = 20, command=lambda:back(EFrame))#Retorna ao frame anterior
-    Retornar.place(x=210, y=100)
+    Retornar_btn = Button(EFrame, text = 'Retornar', width = 20, command=lambda:retornar(EFrame))#Retorna ao frame anterior
+    Retornar_btn.place(x=210, y=100)
 
 
 Editar_btn = ttk.Button(RFrame, text = 'Editar Informação', width = 40, command=editar)#Inicia a funçaõ editar
@@ -264,8 +264,8 @@ def delete():
     Excluir_btn = Button(DFrame, text='Excluir', width=20, command=excluir)#Inicia a função excluir
     Excluir_btn.place(x=20, y=100)
 
-    Retornar = Button(DFrame, text = 'Retornar', width = 20, command=lambda:back(DFrame))#Retorna ao frame anterior
-    Retornar.place(x=210, y=100)
+    Retornar_btn = Button(DFrame, text = 'Retornar', width = 20, command=lambda:retornar(DFrame))#Retorna ao frame anterior
+    Retornar_btn.place(x=210, y=100)
 
 
 Del_btn = ttk.Button(RFrame, text = 'Excluir Informação', width = 40, command=delete)#Inicia a função delete
@@ -278,10 +278,10 @@ def search():
     SFrame = Frame(RFrame, width=600, height=600, bg='#856ff8')
     SFrame.pack()
 
-    Nome_lbl = ttk.Label(SFrame, text='Nome:', width=40, background='#856ff8', foreground='white')
-    Nome_lbl.place(x=0,y=50)
-    Nome_entry = ttk.Entry(SFrame, width=40)
-    Nome_entry.place(x=70, y=50)
+    Name_lbl = ttk.Label(SFrame, text='Nome:', width=40, background='#856ff8', foreground='white') #Nome utliziado para a pesquisa
+    Name_lbl.place(x=0,y=50)
+    Name_entry = ttk.Entry(SFrame, width=40)
+    Name_entry.place(x=70, y=50)
 
 
     def procurar():
@@ -289,28 +289,162 @@ def search():
         PFrame = Frame(SFrame, width=600, height=600, bg='#856ff8')
         PFrame.place(x=0,y=150)
 
-        Nome = Nome_entry.get().lower()
+        Name = Name_entry.get().lower()
 
         cadastrador.cursor.execute('''
             SELECT * FROM Pessoas WHERE Nome REGEXP ? ;
-            ''',(Nome,))
-        Pessoas = cadastrador.cursor.fetchall()
+            ''',(Name,))
+        pessoas = cadastrador.cursor.fetchall()
 
-        Info_lbl = ttk.Label(PFrame,text='Id    Nome    Endereço    Cel     Nasc    Grad', background='#856ff8', foreground='white')
-        Info_lbl.place(x=0,y=10)
+        if len(pessoas) != 0:
+            global i
+            i = 0
+            pessoa = pessoas[i]
 
-        y=50
-        for i,pessoa in enumerate(Pessoas):
-            i_lbl = ttk.Label(PFrame, text=str(pessoa),background='#856ff8', foreground='white')
-            i_lbl.place(x=0,y=y)
-            y+=30
+
+            def next():
+                """Avança para a próxima pessoa da pesquisa"""
+                global i
+
+                if i < len(pessoas)-1:
+
+                    i +=1
+
+                    pessoa = pessoas[i]
+
+                    #Id
+                    id = pessoa[0]
+                    Id_entry.delete(0,END)
+                    Id_entry.insert(0,id)
+
+                    #Nome
+                    nome = pessoa[1]
+                    Nome_entry.delete(0,END)
+                    Nome_entry.insert(0,nome)
+
+                    #Endereço
+                    adress = pessoa[2]
+                    Adress_entry.delete(0,END)
+                    Adress_entry.insert(0,adress)
+
+                    #Celular
+                    cel = pessoa[3]
+                    Cel_entry.delete(0,END)
+                    Cel_entry.insert(0,cel)
+
+                    #Data de aniversário
+                    birth = pessoa[4]
+                    Birth_entry.delete(0,END)
+                    Birth_entry.insert(0,birth)
+
+                    #Graduação
+                    grad = pessoa[5]
+                    Grad_entry.delete(0,END)
+                    Grad_entry.insert(0,grad)
+
+
+            def back():
+                """Avança para a próxima pessoa da pesquisa"""
+                global i
+
+                if i > 0:
+
+                    i -=1
+
+                    pessoa = pessoas[i]
+
+                    #Id
+                    id = pessoa[0]
+                    Id_entry.delete(0,END)
+                    Id_entry.insert(0,id)
+
+                    #Nome
+                    nome = pessoa[1]
+                    Nome_entry.delete(0,END)
+                    Nome_entry.insert(0,nome)
+
+                    #Endereço
+                    adress = pessoa[2]
+                    Adress_entry.delete(0,END)
+                    Adress_entry.insert(0,adress)
+
+                    #Celular
+                    cel = pessoa[3]
+                    Cel_entry.delete(0,END)
+                    Cel_entry.insert(0,cel)
+
+                    #Data de aniversário
+                    birth = pessoa[4]
+                    Birth_entry.delete(0,END)
+                    Birth_entry.insert(0,birth)
+
+                    #Graduação
+                    grad = pessoa[5]
+                    Grad_entry.delete(0,END)
+                    Grad_entry.insert(0,grad)
+
+
+            #Id
+            id = pessoa[0]
+            Id_lbl = ttk.Label(PFrame, text='ID:', width=40, background='#856ff8', foreground='white')
+            Id_lbl.place(x=0,y=00)
+            Id_entry = ttk.Entry(PFrame, width=40)
+            Id_entry.place(x=70, y=00)
+            Id_entry.insert(0,id)
+
+            #Nome
+            nome = pessoa[1]
+            Nome_lbl = ttk.Label(PFrame, text='Nome:', width=40, background='#856ff8', foreground='white')
+            Nome_lbl.place(x=0,y=20)
+            Nome_entry = ttk.Entry(PFrame, width=40)
+            Nome_entry.place(x=70, y=20)
+            Nome_entry.insert(0,nome)
+
+            #Endereço
+            adress = pessoa[2]
+            Adress_lbl = ttk.Label(PFrame, text='Endereço:', width=40, background='#856ff8', foreground='white')
+            Adress_lbl.place(x=0,y=40)
+            Adress_entry = ttk.Entry(PFrame, width=40)
+            Adress_entry.place(x=70, y=40)
+            Adress_entry.insert(0,adress)
+
+            #Celular
+            cel = pessoa[3]
+            Cel_lbl = ttk.Label(PFrame, text='Telefone:', width=40, background='#856ff8', foreground='white')
+            Cel_lbl.place(x=0,y=60)
+            Cel_entry = ttk.Entry(PFrame, width=40)
+            Cel_entry.place(x=70, y=60)
+            Cel_entry.insert(0,cel)
+
+            #Data de aniversário
+            birth = pessoa[4]
+            Birth_lbl = ttk.Label(PFrame, text='Nascimento:', width=20, background='#856ff8', foreground='white')
+            Birth_lbl.place(x=0,y=80)
+            Birth_entry = ttk.Entry(PFrame, width=40)
+            Birth_entry.place(x=75, y=80)
+            Birth_entry.insert(0,birth)
+
+            #Graduação
+            grad = pessoa[5]
+            Grad_lbl = ttk.Label(PFrame, text='Graduação:', width=40, background='#856ff8', foreground='white')
+            Grad_lbl.place(x=0,y=100)
+            Grad_entry = ttk.Entry(PFrame, width=40,)
+            Grad_entry.place(x=70, y=100)
+            Grad_entry.insert(0,grad)
+
+            Next_btn = Button(SFrame, text='Próximo', width=20, command=next)#Função next
+            Next_btn.place(x=20, y=300)
+
+            Back_btn = Button(SFrame, text='Anterior', width=20, command=back)#Função back
+            Back_btn.place(x=200, y=300)
+
 
 
     Procurar_btn = Button(SFrame, text='Procurar', width=20, command=procurar)#inifia a função procurar
     Procurar_btn.place(x=20, y=100)
 
-    Retornar = Button(SFrame, text = 'Retornar', width = 20, command=lambda:back(SFrame))#retorna ao frame anterior
-    Retornar.place(x=210, y=100)
+    Retornar_btn = Button(SFrame, text = 'Retornar', width = 20, command=lambda:retornar(SFrame))#retorna ao frame anterior
+    Retornar_btn.place(x=210, y=100)
 
 
 Search_btn = ttk.Button(RFrame, text = 'Procurar Informação', width = 40, command=search)#inicia a função search
@@ -318,7 +452,7 @@ Search_btn.place(x=50, y=350)
 
 
 #BackButton
-def back(frame):
+def retornar(frame):
     """Deleta o frame atual retornando ao frame anterior"""
     frame.destroy()
 
