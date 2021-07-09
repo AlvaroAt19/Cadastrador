@@ -143,7 +143,7 @@ def editar():
             Nome_entry.insert(0,nome)
 
             #Endereço
-            adress = Pessoa[2]
+            adress = pessoa[2]
             Adress_lbl = ttk.Label(EdFrame, text='Endereço:', width=40, background='#856ff8', foreground='white')
             Adress_lbl.place(x=0,y=100)
             Adress_entry = ttk.Entry(EdFrame, width=40)
@@ -151,7 +151,7 @@ def editar():
             Adress_entry.insert(0,adress)
 
             #Celular
-            cel = Pessoa[3]
+            cel = pessoa[3]
             Cel_lbl = ttk.Label(EdFrame, text='Telefone:', width=40, background='#856ff8', foreground='white')
             Cel_lbl.place(x=0,y=150)
             Cel_entry = ttk.Entry(EdFrame, width=40)
@@ -159,7 +159,7 @@ def editar():
             Cel_entry.insert(0,cel)
 
             #Data de aniversário
-            birth = Pessoa[4]
+            birth = pessoa[4]
             Birth_lbl = ttk.Label(EdFrame, text='Nascimento:', width=20, background='#856ff8', foreground='white')
             Birth_lbl.place(x=0,y=200)
             Birth_entry = ttk.Entry(EdFrame, width=40)
@@ -167,7 +167,7 @@ def editar():
             Birth_entry.insert(0,birth)
 
             #Graduação
-            grad = Pessoa[5]
+            grad = pessoa[5]
             Grad_lbl = ttk.Label(EdFrame, text='Graduação:', width=40, background='#856ff8', foreground='white')
             Grad_lbl.place(x=0,y=250)
             Grad_entry = ttk.Entry(EdFrame, width=40)
@@ -344,7 +344,7 @@ def search():
 
 
             def back():
-                """Avança para a próxima pessoa da pesquisa"""
+                """Retorna para a pessoa anterior"""
                 global i
 
                 if i > 0:
@@ -432,12 +432,11 @@ def search():
             Grad_entry.place(x=70, y=100)
             Grad_entry.insert(0,grad)
 
-            Next_btn = Button(SFrame, text='Próximo', width=20, command=next)#Função next
-            Next_btn.place(x=20, y=300)
-
             Back_btn = Button(SFrame, text='Anterior', width=20, command=back)#Função back
-            Back_btn.place(x=200, y=300)
+            Back_btn.place(x=20, y=300)
 
+            Next_btn = Button(SFrame, text='Próximo', width=20, command=next)#Função next
+            Next_btn.place(x=200, y=300)
 
 
     Procurar_btn = Button(SFrame, text='Procurar', width=20, command=procurar)#inifia a função procurar
